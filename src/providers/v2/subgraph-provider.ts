@@ -78,6 +78,16 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
     this.client = new GraphQLClient(subgraphUrl);
   }
 
+  public setClient(subgraphUrl: string): this {
+    this.client = new GraphQLClient(subgraphUrl);
+    return this;
+  }
+
+  public setChain(chainId: ChainId): this {
+    this.chainId = chainId;
+    return this;
+  }
+
   public async getPools(
     _tokenIn?: Token,
     _tokenOut?: Token,
@@ -107,10 +117,9 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
     let pools: RawV2SubgraphPool[] = [];
 
     log.info(
-      `Getting V2 pools from the subgraph with page size ${this.pageSize}${
-        providerConfig?.blockNumber
-          ? ` as of block ${providerConfig?.blockNumber}`
-          : ''
+      `Getting V2 pools from the subgraph with page size ${this.pageSize}${providerConfig?.blockNumber
+        ? ` as of block ${providerConfig?.blockNumber}`
+        : ''
       }.`
     );
 

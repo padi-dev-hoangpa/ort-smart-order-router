@@ -1,13 +1,13 @@
 {
-  "name": "@uniswap/smart-order-router",
+  "name": "@ort/smart-order-router",
   "version": "2.10.1",
-  "description": "Uniswap Smart Order Router",
+  "description": "Ort Smart Order Router",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Uniswap/smart-order-router.git"
+    "url": "https://github.com/padi-dev-hoangpa/ort-smart-order-router.git"
   },
   "license": "GPL",
   "keywords": [],
