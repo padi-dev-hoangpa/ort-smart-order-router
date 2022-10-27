@@ -1,5 +1,5 @@
 {
-  "name": "@ort/smart-order-router",
+  "name": "@padi-dev-hoangpa/ort-smart-order-router",
   "version": "2.10.1",
   "description": "Ort Smart Order Router",
   "main": "build/main/index.js",
@@ -7,9 +7,9 @@
   "module": "build/module/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/padi-dev-hoangpa/ort-smart-order-router.git"
+    "url": "git+https://github.com/padi-dev-hoangpa/ort-smart-order-router.git"
   },
-  "license": "GPL",
+  "license": "SEE LICENSE IN LICENSE",
   "keywords": [],
   "scripts": {
     "compile-v3-types": "npx typechain --target ethers-v5 --out-dir src/types/v3 './node_modules/@uniswap/?(v3-core|v3-periphery)/artifacts/contracts/**/*.json'",
@@ -113,5 +113,13 @@
   },
   "oclif": {
     "commands": "./cli/commands"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/padi-dev-hoangpa/ort-smart-order-router/issues"
+  },
+  "homepage": "https://github.com/padi-dev-hoangpa/ort-smart-order-router#readme",
+  "directories": {
+    "test": "test"
+  },
+  "author": "hoangpa"
 }
