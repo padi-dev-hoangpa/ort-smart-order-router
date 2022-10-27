@@ -41,6 +41,8 @@ const SUBGRAPH_URL_BY_CHAIN: { [chainId in ChainId]?: string } = {
     'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2',
   [ChainId.RINKEBY]:
     'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v2-rinkeby',
+  [ChainId.GÖRLI]:
+    '',
 };
 
 const threshold = 0.025;

@@ -228,8 +228,8 @@ export class TenderlySimulator implements ISimulator {
     }
 
     if (!swapRoute.methodParameters) {
-      const msg = 'No calldata provided to simulate transaction'
-      log.info(msg)
+      const msg = 'No calldata provided to simulate transaction';
+      log.info(msg);
       throw new Error(msg);
     }
     const { calldata } = swapRoute.methodParameters;
