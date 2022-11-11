@@ -151,7 +151,7 @@ export const WBTC_GÖRLI = new Token(
 );
 export const DAI_GÖRLI = new Token(
   ChainId.GÖRLI,
-  '0x11fe4b6ae13d2a6055c8d9cf65c55bac32b5d844',
+  '0xB1E800F73dC419542A9C2544716A2dF215c03bA4',
   18,
   'DAI',
   'Dai Stablecoin'
@@ -514,7 +514,7 @@ export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
     protected multicall2Provider: IMulticallProvider
-  ) {}
+  ) { }
 
   public async getTokens(
     _addresses: string[],
@@ -584,10 +584,8 @@ export class TokenProvider implements ITokenProvider {
       }
 
       log.info(
-        `Got token symbol and decimals for ${
-          Object.values(addressToToken).length
-        } out of ${addresses.length} tokens on-chain ${
-          providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
+        `Got token symbol and decimals for ${Object.values(addressToToken).length
+        } out of ${addresses.length} tokens on-chain ${providerConfig ? `as of: ${providerConfig?.blockNumber}` : ''
         }`
       );
     }

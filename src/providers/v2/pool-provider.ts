@@ -5,7 +5,7 @@ import retry, { Options as RetryOptions } from 'async-retry';
 import _ from 'lodash';
 
 import { IUniswapV2Pair__factory } from '../../types/v2/factories/IUniswapV2Pair__factory';
-import { ChainId, CurrencyAmount } from '../../util';
+import { ChainId, computePairAddress, CurrencyAmount } from '../../util';
 import { log } from '../../util/log';
 import { poolToString } from '../../util/routes';
 import { IMulticallProvider, Result } from '../multicall-provider';
@@ -76,7 +76,7 @@ export class V2PoolProvider implements IV2PoolProvider {
       minTimeout: 50,
       maxTimeout: 500,
     }
-  ) {}
+  ) { }
 
   public async getPools(
     tokenPairs: [Token, Token][],
@@ -114,10 +114,9 @@ export class V2PoolProvider implements IV2PoolProvider {
     );
 
     log.info(
-      `Got reserves for ${poolAddressSet.size} pools ${
-        providerConfig?.blockNumber
-          ? `as of block: ${await providerConfig?.blockNumber}.`
-          : ``
+      `Got reserves for ${poolAddressSet.size} pools ${providerConfig?.blockNumber
+        ? `as of block: ${await providerConfig?.blockNumber}.`
+        : ``
       }`
     );
 
@@ -191,7 +190,7 @@ export class V2PoolProvider implements IV2PoolProvider {
       return { poolAddress: cachedAddress, token0, token1 };
     }
 
-    const poolAddress = Pair.getAddress(token0, token1);
+    const poolAddress = computePairAddress(token0, token1);
 
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
 

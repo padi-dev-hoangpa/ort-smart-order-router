@@ -17,7 +17,6 @@ import {
   DAI_ROPSTEN,
   USDC_ARBITRUM,
   USDC_ETHEREUM_GNOSIS,
-  USDC_GÖRLI,
   USDC_KOVAN,
   USDC_MAINNET,
   USDC_MOONBEAM,
@@ -27,13 +26,11 @@ import {
   USDC_ROPSTEN,
   USDT_ARBITRUM,
   USDT_ARBITRUM_RINKEBY,
-  USDT_GÖRLI,
   USDT_KOVAN,
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISTIC_KOVAN,
   USDT_ROPSTEN,
-  WBTC_GÖRLI,
 } from '../../../providers/token-provider';
 import { IV2PoolProvider } from '../../../providers/v2/pool-provider';
 import {
@@ -63,7 +60,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   ],
   [ChainId.ARBITRUM_RINKEBY]: [DAI_ARBITRUM_RINKEBY, USDT_ARBITRUM_RINKEBY],
   [ChainId.KOVAN]: [DAI_KOVAN, USDC_KOVAN, USDT_KOVAN],
-  [ChainId.GÖRLI]: [DAI_GÖRLI, USDC_GÖRLI, USDT_GÖRLI, WBTC_GÖRLI],
+  [ChainId.GÖRLI]: [DAI_GÖRLI],
   [ChainId.ROPSTEN]: [DAI_ROPSTEN, USDC_ROPSTEN, USDT_ROPSTEN],
   [ChainId.POLYGON]: [USDC_POLYGON],
   [ChainId.POLYGON_MUMBAI]: [DAI_POLYGON_MUMBAI],

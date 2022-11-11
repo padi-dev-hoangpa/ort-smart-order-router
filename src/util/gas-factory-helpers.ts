@@ -113,6 +113,7 @@ export async function getHighestLiquidityV3USDPool(
     .value();
 
   const poolAccessor = await poolProvider.getPools(usdPools);
+  console.log(poolAccessor)
 
   const pools = _([
     FeeAmount.HIGH,
@@ -423,9 +424,9 @@ export function initSwapRouteFromExisting(
     blockNumber: BigNumber.from(swapRoute.blockNumber),
     methodParameters: swapRoute.methodParameters
       ? ({
-          calldata: swapRoute.methodParameters.calldata,
-          value: swapRoute.methodParameters.value,
-        } as MethodParameters)
+        calldata: swapRoute.methodParameters.calldata,
+        value: swapRoute.methodParameters.value,
+      } as MethodParameters)
       : undefined,
   } as SwapRoute;
 }

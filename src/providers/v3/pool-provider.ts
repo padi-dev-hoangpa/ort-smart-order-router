@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { Token } from '@uniswap/sdk-core';
-import { computePoolAddress, FeeAmount, Pool } from '@uniswap/v3-sdk';
+import { FeeAmount, Pool } from '@uniswap/v3-sdk';
 import retry, { Options as RetryOptions } from 'async-retry';
 import _ from 'lodash';
 
 import { IUniswapV3PoolState__factory } from '../../types/v3/factories/IUniswapV3PoolState__factory';
-import { ChainId } from '../../util';
-import { V3_CORE_FACTORY_ADDRESSES } from '../../util/addresses';
+import { ChainId, computePairAddress } from '../../util';
+// import { V3_CORE_FACTORY_ADDRESSES } from '../../util/addresses';
 import { log } from '../../util/log';
 import { poolToString } from '../../util/routes';
 import { IMulticallProvider, Result } from '../multicall-provider';
@@ -89,7 +89,7 @@ export class V3PoolProvider implements IV3PoolProvider {
       minTimeout: 50,
       maxTimeout: 500,
     }
-  ) {}
+  ) { }
 
   public async getPools(
     tokenPairs: [Token, Token, FeeAmount][],
@@ -108,6 +108,8 @@ export class V3PoolProvider implements IV3PoolProvider {
         feeAmount
       );
 
+      console.log(poolAddress, token0.address, token1.address)
+
       if (poolAddressSet.has(poolAddress)) {
         continue;
       }
@@ -116,6 +118,8 @@ export class V3PoolProvider implements IV3PoolProvider {
       sortedTokenPairs.push([token0, token1, feeAmount]);
       sortedPoolAddresses.push(poolAddress);
     }
+
+    console.log(sortedPoolAddresses, 'sortedPoolAddresses')
 
     log.debug(
       `getPools called with ${tokenPairs.length} token pairs. Deduped down to ${poolAddressSet.size}`
@@ -130,11 +134,13 @@ export class V3PoolProvider implements IV3PoolProvider {
       ),
     ]);
 
+    console.log(slot0Results, 'slot0Results')
+    console.log(liquidityResults, 'liquidityResults')
+
     log.info(
-      `Got liquidity and slot0s for ${poolAddressSet.size} pools ${
-        providerConfig?.blockNumber
-          ? `as of block: ${providerConfig?.blockNumber}.`
-          : ``
+      `Got liquidity and slot0s for ${poolAddressSet.size} pools ${providerConfig?.blockNumber
+        ? `as of block: ${providerConfig?.blockNumber}.`
+        : ``
       }`
     );
 
@@ -176,6 +182,8 @@ export class V3PoolProvider implements IV3PoolProvider {
       poolAddressToPool[poolAddress] = pool;
     }
 
+    console.log(poolAddressToPool, 'poolAddressToPool')
+
     if (invalidPools.length > 0) {
       log.info(
         {
@@ -200,6 +208,8 @@ export class V3PoolProvider implements IV3PoolProvider {
         feeAmount: FeeAmount
       ): Pool | undefined => {
         const { poolAddress } = this.getPoolAddress(tokenA, tokenB, feeAmount);
+        console.log(poolAddress, 'poolAddress');
+        console.log(poolAddressToPool, 'poolAddressToPool');
         return poolAddressToPool[poolAddress];
       },
       getPoolByAddress: (address: string): Pool | undefined =>
@@ -225,12 +235,13 @@ export class V3PoolProvider implements IV3PoolProvider {
       return { poolAddress: cachedAddress, token0, token1 };
     }
 
-    const poolAddress = computePoolAddress({
-      factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
-      tokenA: token0,
-      tokenB: token1,
-      fee: feeAmount,
-    });
+    // const poolAddress = computePoolAddress({
+    //   factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
+    //   tokenA: token0,
+    //   tokenB: token1,
+    //   fee: feeAmount,
+    // });
+    const poolAddress = computePairAddress(token0, token1);
 
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
 

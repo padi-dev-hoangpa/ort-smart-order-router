@@ -1,7 +1,7 @@
 import { Token } from '@uniswap/sdk-core';
-import { Pair } from '@uniswap/v2-sdk';
 import _ from 'lodash';
 
+import { computePairAddress } from '../../util';
 import { ChainId, WRAPPED_NATIVE_CURRENCY } from '../../util/chains';
 import { log } from '../../util/log';
 import {
@@ -61,7 +61,7 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
  * @class StaticV2SubgraphProvider
  */
 export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
-  constructor(private chainId: ChainId) {}
+  constructor(private chainId: ChainId) { }
 
   public async getPools(
     tokenIn?: Token,
@@ -97,7 +97,7 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
 
     const subgraphPools: V2SubgraphPool[] = _(pairs)
       .map(([tokenA, tokenB]) => {
-        const poolAddress = Pair.getAddress(tokenA, tokenB);
+        const poolAddress = computePairAddress(tokenA, tokenB);
 
         if (poolAddressSet.has(poolAddress)) {
           return undefined;

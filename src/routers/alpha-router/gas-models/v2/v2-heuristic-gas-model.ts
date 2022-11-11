@@ -103,7 +103,7 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
     return {
       estimateGasCost: (routeWithValidQuote: V2RouteWithValidQuote) => {
         const usdToken =
-          usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]!.address
+          usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]?.address
             ? usdPool.token1
             : usdPool.token0;
 
@@ -122,7 +122,7 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
         }
 
         const ethToken0 =
-          ethPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]!.address;
+          ethPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]?.address;
 
         const ethTokenPrice = ethToken0
           ? ethPool.token0Price
@@ -145,29 +145,29 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
           throw err;
         }
 
-        const ethToken0USDPool =
-          usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]!.address;
+        // const ethToken0USDPool =
+        //   usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]?.address;
 
-        const ethTokenPriceUSDPool = ethToken0USDPool
-          ? usdPool.token0Price
-          : usdPool.token1Price;
+        // const ethTokenPriceUSDPool = ethToken0USDPool
+        //   ? usdPool.token0Price
+        //   : usdPool.token1Price;
 
         let gasCostInTermsOfUSD: CurrencyAmount;
-        try {
-          gasCostInTermsOfUSD = ethTokenPriceUSDPool.quote(
-            gasCostInEth
-          ) as CurrencyAmount;
-        } catch (err) {
-          log.error(
-            {
-              usdT1: usdPool.token0.symbol,
-              usdT2: usdPool.token1.symbol,
-              gasCostInEthToken: gasCostInEth.currency.symbol,
-            },
-            'Failed to compute USD gas price'
-          );
-          throw err;
-        }
+        // try {
+        //   gasCostInTermsOfUSD = ethTokenPriceUSDPool.quote(
+        //     gasCostInEth
+        //   ) as CurrencyAmount;
+        // } catch (err) {
+        //   log.error(
+        //     {
+        //       usdT1: usdPool.token0.symbol,
+        //       usdT2: usdPool.token1.symbol,
+        //       gasCostInEthToken: gasCostInEth.currency.symbol,
+        //     },
+        //     'Failed to compute USD gas price'
+        //   );
+        //   throw err;
+        // }
 
         return {
           gasEstimate: gasUse,
