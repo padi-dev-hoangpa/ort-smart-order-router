@@ -964,7 +964,6 @@ export class AlphaRouter
       //   );
       // }
       if (protocolsSet.has(Protocol.V2)) {
-        console.log('go here')
         log.info({ protocols, swapType: tradeType }, 'Routing across V2');
         quotePromises.push(
           this.getV2Quotes(

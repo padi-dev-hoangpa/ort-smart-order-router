@@ -145,29 +145,29 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
           throw err;
         }
 
-        // const ethToken0USDPool =
-        //   usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]?.address;
+        const ethToken0USDPool =
+          usdPool.token0.address == WRAPPED_NATIVE_CURRENCY[chainId]?.address;
 
-        // const ethTokenPriceUSDPool = ethToken0USDPool
-        //   ? usdPool.token0Price
-        //   : usdPool.token1Price;
+        const ethTokenPriceUSDPool = ethToken0USDPool
+          ? usdPool.token0Price
+          : usdPool.token1Price;
 
         let gasCostInTermsOfUSD: CurrencyAmount;
-        // try {
-        //   gasCostInTermsOfUSD = ethTokenPriceUSDPool.quote(
-        //     gasCostInEth
-        //   ) as CurrencyAmount;
-        // } catch (err) {
-        //   log.error(
-        //     {
-        //       usdT1: usdPool.token0.symbol,
-        //       usdT2: usdPool.token1.symbol,
-        //       gasCostInEthToken: gasCostInEth.currency.symbol,
-        //     },
-        //     'Failed to compute USD gas price'
-        //   );
-        //   throw err;
-        // }
+        try {
+          gasCostInTermsOfUSD = ethTokenPriceUSDPool.quote(
+            gasCostInEth
+          ) as CurrencyAmount;
+        } catch (err) {
+          log.error(
+            {
+              usdT1: usdPool.token0.symbol,
+              usdT2: usdPool.token1.symbol,
+              gasCostInEthToken: gasCostInEth.currency.symbol,
+            },
+            'Failed to compute USD gas price'
+          );
+          throw err;
+        }
 
         return {
           gasEstimate: gasUse,
